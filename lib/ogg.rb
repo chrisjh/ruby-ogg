@@ -51,12 +51,12 @@ module Ogg
     # Moves the file cursor forward to the next potential page. You probably
     # wish to use the read_page method, which does some validation and actually
     # returns the parsed page.
-    def seek_to_page(capture='OggS')
-      buffer = @io.read(capture.size)
+    def seek_to_page(captureOggS='OggS')
+      buffer = @io.read(captureOggS.size)
       page = nil
       while not @io.eof?
-        if buffer == capture
-          @io.pos -= capture.size
+        if buffer == captureOggS
+          @io.pos -= captureOggS.size
           return @io.pos
         end
         (buffer = buffer[1..-1] << @io.read(1)) rescue Exception
@@ -146,7 +146,7 @@ module Ogg
   # A BinData::Record which represents an Ogg page.
   class Page < BinData::Record
     endian   :little
-    string   :capture, :value => 'OggS', :read_length => 4
+    string   :captureOggS, :value => 'OggS', :read_length => 4
     uint8    :version, :value => 0
     uint8    :page_type
     uint64   :granule_position
